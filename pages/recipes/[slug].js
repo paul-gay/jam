@@ -70,6 +70,20 @@ export const getStaticProps = async ({ params }) => {
     'fields.slug': params.slug
   })
 
+  /**
+   * if data doesn't exist:
+   * redirect user to homepage
+   */
+   if (!items.length) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+  
+
   return {
     /**
      * must return props so they can be passed into the component
@@ -91,6 +105,7 @@ export default function RecipeDetails({ recipe }) {
   /**
    * if nothing is returned from getStaticProps
    * return a Skeleton component
+   * Skeleton serves as a loading screen for when data is being loaded
    */
   if (!recipe) return <Skeleton />
 
