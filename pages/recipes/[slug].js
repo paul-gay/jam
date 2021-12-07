@@ -1,6 +1,7 @@
 import { createClient } from 'contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Image from 'next/image'
+import Skeleton from '../../components/Skeleton'
 
 // Communicate with Contentful
 const client = createClient({
@@ -38,7 +39,14 @@ export const getStaticPaths = async () => {
   return {
     // paths should be an array of path objects that nextjs uses to build static pages for each path
     paths,
-    fallback: false
+    /** fallback: false will return 404 page
+    * true will try to return a fallback version of the RecipeDetails component
+    * it will basically try to return component to browser
+    * once you have the data you pass it into the component
+    * it does so by re-running getStaticProps from above
+    * it takes the data from running getStaticProps and passes into the component (RecipeDetails)
+    */
+    fallback: true
   }
 }
 
@@ -78,7 +86,14 @@ export const getStaticProps = async ({ params }) => {
 
 
 export default function RecipeDetails({ recipe }) {
-  console.log(recipe)
+  // console.log(recipe)
+  
+  /**
+   * if nothing is returned from getStaticProps
+   * return a Skeleton component
+   */
+  if (!recipe) return <Skeleton />
+
   const { featuredImage, title, cookingTime, ingredients, method } = recipe.fields
 
   return (
