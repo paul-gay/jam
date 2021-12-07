@@ -20,9 +20,10 @@ export async function getStaticProps() {
   // return property has a 'props' object -- 
   // any item passed into props object is passed to 'recipes' component as a prop
   return {
-    props: {
-      recipes: res.items,
-    }
+    props: {recipes: res.items},
+    // time in seconds that content will update & regenerate page
+    // only updates when users visit page -- not constantly updating every second
+    revalidate: 1
   }
 }
 

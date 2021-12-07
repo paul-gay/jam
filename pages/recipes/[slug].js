@@ -67,7 +67,10 @@ export const getStaticProps = async ({ params }) => {
      * must return props so they can be passed into the component
      * fields.slug: params.slug above will ALWAYS return an array -- so take the first item
      */
-    props: { recipe: items[0] }
+    props: { recipe: items[0] },
+    // time in seconds that content will update & regenerate page
+    // only updates when users visit page -- not constantly updating every second
+    revalidate: 1
   }
 
 }
